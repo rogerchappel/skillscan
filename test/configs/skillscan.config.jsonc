@@ -1,0 +1,7 @@
+{
+  // Only hard errors should fail this workflow.
+  "failOn": "error",
+  "ignorePaths": ["node_modules", "dist", ".git"],
+  "ignoreRules": ["external-action.unconfirmed-send", "trust-boundary.missing-context-rule"],
+  "includeNames": ["SKILL.md"]
+}

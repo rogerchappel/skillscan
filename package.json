@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "description": "Local-first CLI for scanning agent instruction files for risky directives.",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "bin": {
-    "skillscan": "./dist/cli.js"
+    "skillscan": "./dist/src/cli.js"
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
     }
   },
   "files": [
@@ -25,9 +25,9 @@
     "check": "tsc -p tsconfig.json --noEmit",
     "pretest": "npm run build",
     "test": "node --test dist/test/*.test.js",
-    "smoke": "node dist/cli.js check fixtures/risky-skill",
+    "smoke": "node dist/src/cli.js --help && node dist/src/cli.js check test/fixtures/safe-skill && node dist/src/cli.js json test/fixtures/safe-skill",
     "package:smoke": "npm pack --dry-run",
-    "release:check": "npm test && npm run package:smoke"
+    "release:check": "npm test && npm run smoke && npm run package:smoke"
   },
   "keywords": [
     "agents",
