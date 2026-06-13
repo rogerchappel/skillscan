@@ -18,5 +18,13 @@
   },
   "keywords": [],
   "author": "StackForge User",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rogerchappel/skillscan.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rogerchappel/skillscan/issues"
+  },
+  "homepage": "https://github.com/rogerchappel/skillscan#readme"
 }
