@@ -39,6 +39,10 @@ bash scripts/validate.sh
 
 `scripts/validate.sh` runs the repository's standard local checks when they are defined and will also run `agent-qc ready` when `agent-qc` is installed. Missing `agent-qc` is treated as a skip, not a failure.
 
+## Release readiness
+
+Use [docs/release-readiness.md](docs/release-readiness.md) before opening release PRs or tagging a release.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution expectations. Changes
