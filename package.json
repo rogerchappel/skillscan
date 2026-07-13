@@ -12,6 +12,8 @@
   },
   "files": [
     "src",
+    "docs",
+    "AGENTS.md",
     "README.md",
     "LICENSE",
     "SECURITY.md",
@@ -23,7 +25,7 @@
     "build": "node --check src/index.js",
     "test": "node --test",
     "smoke": "node src/index.js check docs/PRD.md && node src/index.js json docs/PRD.md",
-    "package:smoke": "npm pack --dry-run",
+    "package:smoke": "node scripts/package-smoke.mjs",
     "release:check": "npm run build && npm test && npm run smoke && npm run package:smoke"
   },
   "keywords": [
