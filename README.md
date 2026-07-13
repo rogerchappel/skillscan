@@ -42,6 +42,9 @@ bash scripts/validate.sh
 ## Release readiness
 
 Use [docs/release-readiness.md](docs/release-readiness.md) before opening release PRs or tagging a release.
+Run `npm run release:check` to combine syntax checks, tests, CLI smoke, and an
+npm package dry-run that asserts the CLI, docs, agent guidance, and support
+files are present in the tarball.
 
 ## Contributing
 
