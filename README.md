@@ -27,7 +27,27 @@ skillscan init
 ```
 
 `check` prints a human-readable report. `json` prints stable JSON for CI. `init`
-writes a starter local config file.
+writes `skillscan.config.json` in the current directory:
+
+```json
+{
+  "include": ["AGENTS.md", "SKILL.md", "README.md"]
+}
+```
+
+When a directory is scanned, skillscan uses the config in that directory and
+scans only the listed files. Entries are file paths relative to the scanned
+directory; they must exist, be files, and stay inside that directory. An absent
+config preserves the default behavior of recursively scanning Markdown files
+while skipping `.git` and `node_modules`. Invalid JSON, an invalid `include`
+value, a missing included file, or an escaping path exits with status 2 and a
+clear error.
+
+A direct file target is always scanned and does not load an adjacent config:
+
+```sh
+skillscan check OTHER.md
+```
 
 ## Verify
 
