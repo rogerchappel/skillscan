@@ -58,8 +58,58 @@ export function scanText(text, filePath = '<input>') {
 
 export function scanPath(targetPath) {
   const absolute = path.resolve(targetPath);
-  const files = collectFiles(absolute);
+  const stat = fs.statSync(absolute);
+  const files = stat.isFile() ? [absolute] : collectDirectoryFiles(absolute);
   return files.flatMap((file) => scanText(fs.readFileSync(file, 'utf8'), file));
+}
+
+function collectDirectoryFiles(targetPath) {
+  const configPath = path.join(targetPath, 'skillscan.config.json');
+  if (fs.existsSync(configPath)) {
+    return readConfigIncludes(configPath, targetPath);
+  }
+
+  return collectFiles(targetPath);
+}
+
+function readConfigIncludes(configPath, targetPath) {
+  let config;
+  try {
+    config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  } catch (error) {
+    throw new Error(`invalid ${configPath}: ${error.message}`);
+  }
+
+  if (
+    !config ||
+    typeof config !== 'object' ||
+    !Array.isArray(config.include) ||
+    config.include.length === 0 ||
+    config.include.some(
+      (entry) => typeof entry !== 'string' || entry.length === 0 || path.isAbsolute(entry),
+    )
+  ) {
+    throw new Error(`invalid ${configPath}: "include" must be a non-empty array of relative file paths`);
+  }
+
+  const root = `${path.resolve(targetPath)}${path.sep}`;
+  return config.include.map((entry) => {
+    const file = path.resolve(targetPath, entry);
+    if (!file.startsWith(root)) {
+      throw new Error(`invalid ${configPath}: include path must stay within the scan directory: ${entry}`);
+    }
+
+    let stat;
+    try {
+      stat = fs.statSync(file);
+    } catch {
+      throw new Error(`invalid ${configPath}: included file does not exist: ${entry}`);
+    }
+    if (!stat.isFile()) {
+      throw new Error(`invalid ${configPath}: included path is not a file: ${entry}`);
+    }
+    return file;
+  });
 }
 
 function collectFiles(targetPath) {
@@ -108,9 +158,11 @@ function usage() {
     'Usage: skillscan <check|json|init> [path]',
     '',
     'Commands:',
-    '  check <path>  Print human-readable findings for a file or directory.',
-    '  json <path>   Print stable JSON findings for a file or directory.',
+    '  check <path>  Print findings. Directory scans honor skillscan.config.json.',
+    '  json <path>   Print JSON. Directory scans honor skillscan.config.json.',
     '  init          Write a starter skillscan.config.json file.',
+    '',
+    'Direct file targets are always scanned, independent of directory config.',
   ].join('\n');
 }
 
