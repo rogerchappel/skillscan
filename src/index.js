@@ -27,7 +27,8 @@ const RULES = [
     severity: 'medium',
     pattern: /\b(?:web|browser|mcp|slack|email|chat)\b/i,
     message: 'External-context instructions should state how untrusted content is handled.',
-    requireNearby: /\b(?:untrusted|prompt injection|verify|do not trust|treat .* as data)\b/i,
+    requireNearby: /\b(?:untrusted|prompt injection|do not trust|treat [^\n]* as data)\b/i,
+    nearbyLineRadius: 1,
   },
 ];
 
@@ -40,7 +41,13 @@ export function scanText(text, filePath = '<input>') {
   lines.forEach((line, index) => {
     for (const rule of RULES) {
       if (!rule.pattern.test(line)) continue;
-      if (rule.requireNearby && rule.requireNearby.test(text)) continue;
+      if (rule.requireNearby) {
+        const radius = rule.nearbyLineRadius ?? 0;
+        const nearby = lines
+          .slice(Math.max(0, index - radius), Math.min(lines.length, index + radius + 1))
+          .join('\n');
+        if (rule.requireNearby.test(nearby)) continue;
+      }
 
       findings.push({
         ruleId: rule.id,

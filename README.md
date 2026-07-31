@@ -49,6 +49,11 @@ A direct file target is always scanned and does not load an adjacent config:
 skillscan check OTHER.md
 ```
 
+Trust-boundary language must appear on the external-context instruction's line
+or an immediately adjacent line. Explicit language such as `untrusted`,
+`prompt injection`, `do not trust`, or `treat ... as data` counts as a
+mitigation; unrelated verification instructions do not suppress a finding.
+
 ## Verify
 
 Run the local validation script before opening a pull request:
