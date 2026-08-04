@@ -150,13 +150,25 @@ function printText(findings) {
   }
 }
 
-function writeConfig() {
-  const target = path.resolve('skillscan.config.json');
+export function writeConfig(directory = '.') {
+  const root = path.resolve(directory);
+  const target = path.join(root, 'skillscan.config.json');
   if (fs.existsSync(target)) {
     throw new Error('skillscan.config.json already exists');
   }
 
-  fs.writeFileSync(target, `${JSON.stringify({ include: ['AGENTS.md', 'SKILL.md', 'README.md'] }, null, 2)}\n`);
+  const include = [...TARGET_NAMES].filter((name) => {
+    try {
+      return fs.statSync(path.join(root, name)).isFile();
+    } catch {
+      return false;
+    }
+  });
+  if (include.length === 0) {
+    throw new Error('no supported target files found; create AGENTS.md, SKILL.md, or README.md first');
+  }
+
+  fs.writeFileSync(target, `${JSON.stringify({ include }, null, 2)}\n`);
   console.log(`Created ${target}`);
 }
 
