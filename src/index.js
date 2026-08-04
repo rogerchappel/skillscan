@@ -179,8 +179,9 @@ function usage() {
     'Commands:',
     '  check <path>  Print findings. Directory scans honor skillscan.config.json.',
     '  json <path>   Print JSON. Directory scans honor skillscan.config.json.',
-    '  init          Write a starter skillscan.config.json file.',
+    '  init          Include supported target files present in the current directory.',
     '',
+    'Init requires at least one of AGENTS.md, SKILL.md, or README.md.',
     'Direct file targets are always scanned, independent of directory config.',
   ].join('\n');
 }
