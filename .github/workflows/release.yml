@@ -25,12 +25,7 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
       - name: Install dependencies
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
+        run: npm ci
       - name: Install ReleaseBox
         run: |
           set -euo pipefail
@@ -42,7 +37,9 @@ jobs:
       - name: Run release checks
         run: npm run release:check
       - name: Build package
-        run: npm pack
+        run: npm pack --workspace=false
+      - name: Publish scoped package
+        run: npm publish --access public --provenance
       - name: Generate release notes
         run: node /tmp/releasebox/bin/releasebox.js notes . > RELEASE_NOTES.md
       - name: Create GitHub release
