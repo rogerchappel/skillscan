@@ -1,5 +1,5 @@
 {
-  "name": "skillscan",
+  "name": "@rogerchappel/skillscan",
   "version": "0.1.0",
   "description": "Local-first scanner for risky agent instruction files and skill documentation.",
   "type": "module",
@@ -26,7 +26,8 @@
     "test": "node --test",
     "smoke": "node src/index.js check docs/PRD.md && node src/index.js json docs/PRD.md",
     "package:smoke": "node scripts/package-smoke.mjs",
-    "release:check": "npm run build && npm test && npm run smoke && npm run package:smoke"
+    "release:identity": "node scripts/release-identity.mjs",
+    "release:check": "npm run release:identity && npm run build && npm test && npm run smoke && npm run package:smoke"
   },
   "keywords": [
     "agent-instructions",
@@ -37,6 +38,9 @@
   ],
   "author": "Roger Chappel",
   "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rogerchappel/skillscan.git"
