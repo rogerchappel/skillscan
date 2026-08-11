@@ -9,6 +9,10 @@ format and uses semantic versioning when versioned releases are published.
 
 ### Added
 
+- Adopted the repository-owned `@rogerchappel/skillscan` npm identity, declared
+  Node.js 22 support, and added deterministic installs and registry collision
+  checks to the release path.
+
 - Added a release-readiness checklist for local verification and package review.
 
 - Initial project setup.

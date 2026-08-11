@@ -6,6 +6,17 @@ const output = execFileSync("npm", ["pack", "--dry-run", "--json"], {
 });
 
 const [pack] = JSON.parse(output);
+const expectedName = "@rogerchappel/skillscan";
+
+if (pack.name !== expectedName) {
+  console.error(`Unexpected package name: expected ${expectedName}, received ${pack.name}.`);
+  process.exit(1);
+}
+
+if (!pack.filename.startsWith("rogerchappel-skillscan-")) {
+  console.error(`Unexpected package filename: ${pack.filename}.`);
+  process.exit(1);
+}
 const packedFiles = new Set(pack.files.map((file) => file.path));
 
 const requiredFiles = [

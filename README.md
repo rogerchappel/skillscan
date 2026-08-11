@@ -9,12 +9,14 @@ security posture before using it in production.
 
 ## Install
 
-Install from a checked-out copy while the package is pre-release:
+Install the repository-owned scoped package:
 
 ```sh
-npm install
-npm link
+npm install --global @rogerchappel/skillscan
 ```
+
+The executable remains `skillscan`. The npm scope avoids the unrelated
+unscoped `skillscan` package, which is owned by another project.
 
 ## Use
 
@@ -74,9 +76,9 @@ bash scripts/validate.sh
 ## Release readiness
 
 Use [docs/release-readiness.md](docs/release-readiness.md) before opening release PRs or tagging a release.
-Run `npm run release:check` to combine syntax checks, tests, CLI smoke, and an
-npm package dry-run that asserts the CLI, docs, agent guidance, and support
-files are present in the tarball.
+Run `npm run release:check` to verify the scoped registry identity, syntax,
+tests, CLI smoke, and an npm package dry-run that asserts the package name and
+expected files. Release checks require Node.js 22 or newer.
 
 ## Contributing
 
