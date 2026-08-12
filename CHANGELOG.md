@@ -7,6 +7,11 @@ format and uses semantic versioning when versioned releases are published.
 
 ## [Unreleased]
 
+### Fixed
+
+- Reject surplus `check` and `json` positional arguments instead of silently
+  ignoring requested scan targets.
+
 ### Added
 
 - Adopted the repository-owned `@rogerchappel/skillscan` npm identity, declared
