@@ -174,7 +174,8 @@ export function writeConfig(directory = '.') {
 
 function usage() {
   return [
-    'Usage: skillscan <check|json|init> [path]',
+    'Usage: skillscan <check|json> [path]',
+    '       skillscan init',
     '',
     'Commands:',
     '  check <path>  Print findings. Directory scans honor skillscan.config.json.',
@@ -199,6 +200,12 @@ function main(argv) {
   }
 
   if (command !== 'check' && command !== 'json') {
+    console.error(usage());
+    return 2;
+  }
+
+  if (argv.length > 2) {
+    console.error(`skillscan: expected at most one scan target, received ${argv.length - 1}\n`);
     console.error(usage());
     return 2;
   }

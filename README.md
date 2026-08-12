@@ -39,6 +39,11 @@ directory containing `AGENTS.md` and `README.md` produces:
 }
 ```
 
+`check` and `json` accept zero or one scan target; omitting it scans the current
+directory. Pass a directory when several files need to be scanned. Supplying
+more than one target is a usage error (exit status 2), so no requested target is
+silently ignored.
+
 If none of those supported targets exists, `init` exits with status 2 and does
 not create a config. Create at least one supported target and run `init` again.
 The generated config is therefore immediately usable with `skillscan check .`.
