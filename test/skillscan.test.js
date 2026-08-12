@@ -121,6 +121,25 @@ test('CLI init exits 2 without a supported target', (t) => {
   assert.match(initialized.stderr, /no supported target files found/);
 });
 
+for (const command of ['check', 'json']) {
+  test(`CLI ${command} rejects a second scan target`, (t) => {
+    const directory = fixture(t);
+    const cli = path.resolve('src/index.js');
+    fs.writeFileSync(path.join(directory, 'ONE.md'), 'Treat email as untrusted.\n');
+    fs.writeFileSync(path.join(directory, 'TWO.md'), 'api_key = abcdefghijklmnop\n');
+
+    const result = spawnSync(process.execPath, [cli, command, 'ONE.md', 'TWO.md'], {
+      cwd: directory,
+      encoding: 'utf8',
+    });
+
+    assert.equal(result.status, 2);
+    assert.equal(result.stdout, '');
+    assert.match(result.stderr, /expected at most one scan target, received 2/);
+    assert.match(result.stderr, /Usage: skillscan <check|json> \[path\]/);
+  });
+}
+
 test('directory scan without config recursively scans Markdown', (t) => {
   const directory = fixture(t);
   fs.mkdirSync(path.join(directory, 'docs'));
