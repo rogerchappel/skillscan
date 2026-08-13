@@ -9,14 +9,22 @@ security posture before using it in production.
 
 ## Install
 
-Install the repository-owned scoped package:
+The scoped package has not been published to npm yet. Until the first registry
+release, install the current source checkout:
+
+```sh
+git clone https://github.com/rogerchappel/skillscan.git
+npm install --global ./skillscan
+```
+
+After the first release is visible on npm, the registry install will be:
 
 ```sh
 npm install --global @rogerchappel/skillscan
 ```
 
-The executable remains `skillscan`. The npm scope avoids the unrelated
-unscoped `skillscan` package, which is owned by another project.
+The executable is `skillscan` in both cases. The npm scope avoids the
+unrelated unscoped `skillscan` package, which is owned by another project.
 
 ## Use
 
