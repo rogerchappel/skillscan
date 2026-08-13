@@ -27,7 +27,8 @@
     "smoke": "node src/index.js check docs/PRD.md && node src/index.js json docs/PRD.md",
     "package:smoke": "node scripts/package-smoke.mjs",
     "release:identity": "node scripts/release-identity.mjs",
-    "release:check": "npm run release:identity && npm run build && npm test && npm run smoke && npm run package:smoke"
+    "release:install-docs": "node scripts/release-install-docs.mjs",
+    "release:check": "npm run release:identity && npm run release:install-docs && npm run build && npm test && npm run smoke && npm run package:smoke"
   },
   "keywords": [
     "agent-instructions",
