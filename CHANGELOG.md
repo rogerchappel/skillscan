@@ -11,6 +11,8 @@ format and uses semantic versioning when versioned releases are published.
 
 - Reject surplus `check` and `json` positional arguments instead of silently
   ignoring requested scan targets.
+- Reject arguments to `init` instead of silently ignoring them and writing a
+  config in the current directory.
 
 ### Added
 

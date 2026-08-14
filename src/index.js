@@ -180,7 +180,7 @@ function usage() {
     'Commands:',
     '  check <path>  Print findings. Directory scans honor skillscan.config.json.',
     '  json <path>   Print JSON. Directory scans honor skillscan.config.json.',
-    '  init          Include supported target files present in the current directory.',
+    '  init          Accept no arguments; include supported target files in the current directory.',
     '',
     'Init requires at least one of AGENTS.md, SKILL.md, or README.md.',
     'Direct file targets are always scanned, independent of directory config.',
@@ -195,6 +195,12 @@ function main(argv) {
   }
 
   if (command === 'init') {
+    if (argv.length > 1) {
+      console.error(`skillscan: init accepts no arguments, received ${argv.length - 1}\n`);
+      console.error(usage());
+      return 2;
+    }
+
     writeConfig();
     return 0;
   }
