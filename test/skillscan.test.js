@@ -107,9 +107,29 @@ test('CLI init creates a config that immediately passes check', (t) => {
   });
 
   assert.equal(initialized.status, 0, initialized.stderr);
+  assert.match(initialized.stdout, /Created .*skillscan\.config\.json/);
   assert.equal(checked.status, 0, checked.stderr);
   assert.match(checked.stdout, /skillscan: no findings/);
 });
+
+for (const args of [['ignored'], ['ignored', 'also-ignored']]) {
+  test(`CLI init rejects ${args.length} surplus argument${args.length === 1 ? '' : 's'}`, (t) => {
+    const directory = fixture(t);
+    const cli = path.resolve('src/index.js');
+    fs.writeFileSync(path.join(directory, 'README.md'), '# Fixture\n');
+
+    const initialized = spawnSync(process.execPath, [cli, 'init', ...args], {
+      cwd: directory,
+      encoding: 'utf8',
+    });
+
+    assert.equal(initialized.status, 2);
+    assert.equal(initialized.stdout, '');
+    assert.match(initialized.stderr, new RegExp(`init accepts no arguments, received ${args.length}`));
+    assert.match(initialized.stderr, /Usage: skillscan <check\|json> \[path\]/);
+    assert.equal(fs.existsSync(path.join(directory, 'skillscan.config.json')), false);
+  });
+}
 
 test('CLI init exits 2 without a supported target', (t) => {
   const directory = fixture(t);

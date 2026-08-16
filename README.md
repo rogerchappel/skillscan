@@ -52,6 +52,10 @@ directory. Pass a directory when several files need to be scanned. Supplying
 more than one target is a usage error (exit status 2), so no requested target is
 silently ignored.
 
+`init` accepts no arguments and always operates on the current directory.
+Supplying any positional argument or option is a usage error (exit status 2),
+and no config is created.
+
 If none of those supported targets exists, `init` exits with status 2 and does
 not create a config. Create at least one supported target and run `init` again.
 The generated config is therefore immediately usable with `skillscan check .`.
