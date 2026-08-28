@@ -7,6 +7,10 @@ format and uses semantic versioning when versioned releases are published.
 
 ## [Unreleased]
 
+### Changed
+
+- Upgraded GitHub Actions workflow dependencies across CI, release, and release dry-run (`actions/checkout` to v7 and `actions/setup-node` to v7).
+
 ### Fixed
 
 - Reject surplus `check` and `json` positional arguments instead of silently
