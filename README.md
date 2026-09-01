@@ -25,6 +25,8 @@ npm install --global @rogerchappel/skillscan
 
 The executable is `skillscan` in both cases. The npm scope avoids the
 unrelated unscoped `skillscan` package, which is owned by another project.
+After installation, run `skillscan --help` to confirm the npm-created executable
+link resolves to the installed package.
 
 ## Use
 
@@ -95,7 +97,9 @@ bash scripts/validate.sh
 Use [docs/release-readiness.md](docs/release-readiness.md) before opening release PRs or tagging a release.
 Run `npm run release:check` to verify the scoped registry identity, syntax,
 tests, CLI smoke, and an npm package dry-run that asserts the package name and
-expected files. Release checks require Node.js 22 or newer.
+expected files. It also packs and installs the tarball in a temporary prefix,
+then exercises `skillscan --help` and a JSON scan through npm's executable link.
+Release checks require Node.js 22 or newer.
 
 ## Contributing
 
