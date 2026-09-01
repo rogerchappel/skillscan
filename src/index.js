@@ -227,7 +227,8 @@ function main(argv) {
 }
 
 const invokedPath = process.argv[1] ? path.resolve(process.argv[1]) : '';
-if (invokedPath === fileURLToPath(import.meta.url)) {
+const invokedFile = invokedPath ? fs.realpathSync(invokedPath) : '';
+if (invokedFile === fileURLToPath(import.meta.url)) {
   try {
     process.exitCode = main(process.argv.slice(2));
   } catch (error) {
