@@ -82,6 +82,11 @@ or an immediately adjacent line. Explicit language such as `untrusted`,
 `prompt injection`, `do not trust`, or `treat ... as data` counts as a
 mitigation; unrelated verification instructions do not suppress a finding.
 
+## Supported runtime
+
+Skillscan requires Node.js 22 or newer. CI runs the release checks on Node.js 22,
+the minimum supported major version.
+
 ## Verify
 
 Run the local validation script before opening a pull request:
